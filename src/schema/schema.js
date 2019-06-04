@@ -1,18 +1,23 @@
-const { gql } = require('apollo-server');
+import { gql } from 'apollo-server'
 
 const typeDefs = gql`
-type Query {
+  type Query {
     user(id: ID!): User # get user by ID
     currentUser: User! # get info about yourself
-    
-}
-type Mutation {
+  }
+  type Mutation {
     ########################## A U T H E N T I C A T I O N   MUTATIONS  ############################
     # sign up a new user; returns Boolean for successful action
-    signup(email: String!, password: String!, firstName: String!, lastName: String!, zipcode: String): BasicResponse!
+    signup(
+      email: String!
+      password: String!
+      firstName: String!
+      lastName: String!
+      zipcode: String
+    ): BasicResponse!
 
     # verify a user (2FA) with a verification code
-    validateFromCode(validationCode: String!): VerifyResponse!
+    validateFromCode(validationCode: String!): ValidateResponse!
 
     # login a user given email and password
     login(email: String!, password: String!): LoginResponse!
@@ -24,21 +29,25 @@ type Mutation {
     requestPasswordChange(email: String!): BasicResponse!
 
     # change user password, given verificationCode unique to change-password link
-    changePassword(email: String!, newPassword: String!, verificationCode: String!): VerifyResponse!
+    changePassword(
+      email: String!
+      newPassword: String!
+      verificationCode: String!
+    ): ValidateResponse!
     #################################################################################################
-}
+  }
 
-######################### E N T I T I E S #########################################
-type User {
+  ######################### E N T I T I E S #########################################
+  type User {
     id: ID!
     email: String!
     firstName: String
     lastName: String
-    address:  Address
+    address: Address
     role: String
-}
+  }
 
-type Organization {
+  type Organization {
     id: ID!
     name: String!
     shortDescription: String
@@ -48,45 +57,44 @@ type Organization {
     photos: [Photo]
     categories: [Category]
     verified: Boolean
-}
+  }
 
-type Category {
+  type Category {
     name: String
-}
+  }
 
-type Photo {
+  type Photo {
     url: String!
-}
+  }
 
-type Address {
+  type Address {
     streetAddress: String
     city: String
     state: String
     country: String
     zipCode: String!
-}
+  }
 
-########################## R E S P O N S E S ############################
-# basic response for a mutation
-type BasicResponse {
+  ########################## R E S P O N S E S ############################
+  # basic response for a mutation
+  type BasicResponse {
     success: Boolean!
-}
+  }
 
-# response for validating a user
-type ValidateResponse {
+  # response for validating a user
+  type ValidateResponse {
     success: Boolean!
     user: User
-}
+  }
 
-# response to a login actions
-type LoginResponse { # response to login
+  # response to a login actions
+  type LoginResponse { # response to login
     success: Boolean!
     user: User!
     accessToken: String # JWT access token
     refreshToken: String # JWT refresh token
-}
-###################################################################################
+  }
+  ###################################################################################
 `
-module.exports = {
-    typeDefs
-};
+
+export default typeDefs

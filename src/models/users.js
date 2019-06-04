@@ -1,8 +1,5 @@
-
-module.exports = {
-    users: () => {
-        getFromToken: ({ token })
-    }
+export default () => {
+  getFromToken: ({ token })
 }
 
 // getById

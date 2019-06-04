@@ -1,7 +1,5 @@
-const { authentication } = require("./authentication");
+import authentication from './authentication'
 
-module.exports = {
-    models: ({ user }) => ({
-        Authentication: authentication()
-    })
-}
+export default user => ({
+  Authentication: authentication(),
+})
