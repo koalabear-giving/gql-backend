@@ -26,4 +26,5 @@ services:
       - DB_URL=postgres://root:root@db:5432/koalabear
     links:
       - db
-volumes: postgres:
+volumes:
+  postgres:
