@@ -8,3 +8,9 @@ db/rollback:
 
 db/down:
 	docker exec $(API) npx knex-migrate down --to 0
+
+build:
+	docker-compose up --build
+
+start:
+	docker-compose up

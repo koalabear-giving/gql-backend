@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tools'
 
-const typeDefs = gql`
+export default gql`
   type Mutation {
     ########################## M U T A T I O N S  ############################
     # sign up a new user; returns Boolean for successful action
@@ -10,7 +10,10 @@ const typeDefs = gql`
     validateFromCode(validationCode: String!): ValidateResponse!
 
     # login a user given email and password
-    login(email: String!, password: String!): LoginResponse!
+    login(input: LoginInput!): LoginResponse!
+
+    # login a user with facebook credentials
+    facebookLogin(facebookCode: String!): LoginResponse!
 
     # use a refresh token to refresh access (with new access token); essentially like re-logging in
     refreshAccess(refreshToken: String!): LoginResponse!
@@ -19,11 +22,7 @@ const typeDefs = gql`
     requestPasswordChange(email: String!): MutationResponse!
 
     # change user password, given verificationCode unique to change-password link
-    changePassword(
-      email: String!
-      newPassword: String!
-      verificationCode: String!
-    ): ValidateResponse!
+    changePassword(input: ChangePasswordInput): ValidateResponse!
   }
   ##############################################################################
 
@@ -34,6 +33,17 @@ const typeDefs = gql`
     firstName: String!
     lastName: String!
     zipcode: String
+  }
+
+  input ChangePasswordInput {
+    email: String!
+    newPassword: String!
+    verificationCode: String!
+  }
+
+  input LoginInput {
+    email: String!
+    password: String!
   }
   ##############################################################################
 
