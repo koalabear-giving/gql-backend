@@ -9,7 +9,7 @@
     "build": "yarn clean && mkdir -p dist && babel src -s -D -d dist"
   },
   "dependencies": {
-    "apollo-server": "^2.4.8",
+    "apollo-server": "^2.14.2",
     "apollo-server-express": "^2.4.8",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.3",
